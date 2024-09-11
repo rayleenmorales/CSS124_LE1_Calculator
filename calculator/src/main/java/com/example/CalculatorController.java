@@ -4,9 +4,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
- * Group Name: <Group Name>
- * Group Members: <Group Members>
- * Course/Section: <Course/Section>
+ * Group Name: GUI-yomi
+ * Group Members: 
+ *      BARCE, John Bernard
+ *      CORPUZ, Ralph Christian
+ *      DELA CRUZ, Sofia Cloie
+ *      MORALES, Rayleen Claire
+ *      NASE, Louiese Gabrielle
+ *      RESPECIO, Luis Arnold
+ *      VINUYA, Cyril Troy
+ *      
+ * Course/Section: CSS124L - BM1
  */
 
 public class CalculatorController {
