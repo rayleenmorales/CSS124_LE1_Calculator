@@ -33,54 +33,31 @@ public class CalculatorController {
     @FXML Button calcPadDelete;
     @FXML Button calcPadCE;
 
-    @FXML
-    private void handleCalcPad1() {
-        calcDisplay.setText("handleCalcPad1");
-    }
+    //Declarables
+    private double previousValue = 0;
+    private String operator = "";
+    private boolean isNewInput = true;
 
-    @FXML
-    private void handleCalcPad2() {
-        calcDisplay.setText("handleCalcPad2");
-    }
+    //Number Handlers
+    @FXML private void handleCalcPad1() {handleNumInput("1");}
+    @FXML private void handleCalcPad2() {handleNumInput("2");}
+    @FXML private void handleCalcPad3() {handleNumInput("3");}
+    @FXML private void handleCalcPad4() {handleNumInput("4");}
+    @FXML private void handleCalcPad5() {handleNumInput("5");}
+    @FXML private void handleCalcPad6() {handleNumInput("6");}
+    @FXML private void handleCalcPad7() {handleNumInput("7");}
+    @FXML private void handleCalcPad8() {handleNumInput("8");}
+    @FXML private void handleCalcPad9() {handleNumInput("9");}
+    @FXML private void handleCalcPad0() {handleNumInput("0");}
 
-    @FXML
-    private void handleCalcPad3() {
-        calcDisplay.setText("handleCalcPad3");
-    }
-
-    @FXML
-    private void handleCalcPad4() {
-        calcDisplay.setText("handleCalcPad4");
-    }
-
-    @FXML
-    private void handleCalcPad5() {
-        calcDisplay.setText("handleCalcPad5");
-    }
-
-    @FXML
-    private void handleCalcPad6() {
-        calcDisplay.setText("handleCalcPad6");
-    }
-
-    @FXML
-    private void handleCalcPad7() {
-        calcDisplay.setText("handleCalcPad7");
-    }
-
-    @FXML
-    private void handleCalcPad8() {
-        calcDisplay.setText("handleCalcPad8");
-    }
-
-    @FXML
-    private void handleCalcPad9() {
-        calcDisplay.setText("handleCalcPad9");
-    }
-
-    @FXML
-    private void handleCalcPad0() {
-        calcDisplay.setText("handleCalcPad0");
+    //Handles number inputs
+    private void handleNumInput (String number) {
+        if(isNewInput) {
+            calcDisplay.setText(number);
+            isNewInput = false;
+        } else {
+            calcDisplay.setText(calcDisplay.getText() + number);
+        }
     }
 
     @FXML
