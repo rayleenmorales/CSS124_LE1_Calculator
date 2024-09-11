@@ -45,6 +45,7 @@ public class CalculatorController {
     private double previousValue = 0;
     private String operator = "";
     private boolean isNewInput = true;
+    private boolean isOperatorPressed = false;
 
     //Number Handlers
     @FXML private void handleCalcPad1() {handleNumInput("1");}
@@ -66,26 +67,56 @@ public class CalculatorController {
         } else {
             calcDisplay.setText(calcDisplay.getText() + number);
         }
+        isOperatorPressed = false;
     }
 
-    @FXML
-    private void handleCalcPadAdd() {
-        calcDisplay.setText("handleCalcPadAdd");
+    //Arithmetic operation handlers
+    @FXML private void handleCalcPadAdd() {processOp("+");}
+    @FXML private void handleCalcPadMinus() {processOp("-");}
+    @FXML private void handleCalcPadMultiply() {processOp("*");}
+    @FXML private void handleCalcPadDivide() {processOp("/");}
+
+    //Handles arithmetic operations
+    private void processOp(String newOp) {
+        if (isOperatorPressed) {
+            operator = newOp;
+            return;
+        }
+        
+        if (!isNewInput) {
+            double currentValue = Double.parseDouble(calcDisplay.getText());
+            performPendingOp(currentValue);
+        }
+
+        operator = newOp;
+        previousValue = Double.parseDouble(calcDisplay.getText());
+        isNewInput = true;
+        isOperatorPressed = true;
     }
 
-    @FXML
-    private void handleCalcPadMinus() {
-        calcDisplay.setText("handleCalcPadMinus");
-    }
+    //Handles continuous arithmetic operations
+    private void performPendingOp(double currentValue) {
+        switch(operator) {
+            case "+":
+                previousValue += currentValue;
+                break;
+            case "-":
+                previousValue -= currentValue;
+                break;
+            case "*":
+                previousValue *= currentValue;
+                break;
+            case "/":
+                if(currentValue != 0) {
+                    previousValue /= currentValue;
+                } else {
+                    calcDisplay.setText("Error");
+                    return;
+                }
+                break;            
+        }
 
-    @FXML
-    private void handleCalcPadMultiply() {
-        calcDisplay.setText("handleCalcPadMultiply");
-    }
-
-    @FXML
-    private void handleCalcPadDivide() {
-        calcDisplay.setText("handleCalcPadDivide");
+        calcDisplay.setText(String.valueOf(previousValue));
     }
 
     @FXML
@@ -95,7 +126,12 @@ public class CalculatorController {
 
     @FXML
     private void handleCalcPadEquals() {
-        calcDisplay.setText("handleCalcPadEquals");
+        if (!isNewInput) {
+            double currentValue = Double.parseDouble(calcDisplay.getText());
+            performPendingOp(currentValue);
+            operator = "";
+            isNewInput = true;
+        }
     }
 
     @FXML
