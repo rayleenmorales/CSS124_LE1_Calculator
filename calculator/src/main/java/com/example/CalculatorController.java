@@ -44,8 +44,8 @@ public class CalculatorController {
     //Declarables
     private double previousValue = 0;
     private String operator = "";
+    int count = 0;
     private boolean isNewInput = true;
-    private boolean isOperatorPressed = false;
 
     //Number Handlers
     @FXML private void handleCalcPad1() {handleNumInput("1");}
@@ -67,7 +67,6 @@ public class CalculatorController {
         } else {
             calcDisplay.setText(calcDisplay.getText() + number);
         }
-        isOperatorPressed = false;
     }
 
     //Arithmetic operation handlers
@@ -78,20 +77,17 @@ public class CalculatorController {
 
     //Handles arithmetic operations
     private void processOp(String newOp) {
-        if (isOperatorPressed) {
-            operator = newOp;
-            return;
-        }
-        
-        if (!isNewInput) {
+        count++;
+
+        if (count > 1) {
             double currentValue = Double.parseDouble(calcDisplay.getText());
             performPendingOp(currentValue);
+
         }
 
         operator = newOp;
         previousValue = Double.parseDouble(calcDisplay.getText());
         isNewInput = true;
-        isOperatorPressed = true;
     }
 
     //Handles continuous arithmetic operations
@@ -131,12 +127,14 @@ public class CalculatorController {
             performPendingOp(currentValue);
             operator = "";
             isNewInput = true;
+            count = 0;
         }
     }
 
     @FXML
     private void handleCalcPadClear() {
         calcDisplay.setText("handleCalcPadClear");
+        count = 0;
     }
 
     @FXML
