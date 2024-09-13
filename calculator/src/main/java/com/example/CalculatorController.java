@@ -44,7 +44,7 @@ public class CalculatorController {
     //Declarables
     private double previousValue = 0;
     private String operator = "";
-    int count = 0;
+    int numberOfInput = 0;
     private boolean isNewInput = true;
 
     //Number Handlers
@@ -77,13 +77,13 @@ public class CalculatorController {
 
     //Handles arithmetic operations
     private void processOp(String newOp) {
-        count++;
+        numberOfInput++;
 
-        if (count > 1) {
+        if(numberOfInput > 1) {
             double currentValue = Double.parseDouble(calcDisplay.getText());
             performPendingOp(currentValue);
-
         }
+
 
         operator = newOp;
         previousValue = Double.parseDouble(calcDisplay.getText());
