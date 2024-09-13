@@ -45,7 +45,9 @@ public class CalculatorController {
     private double previousValue = 0;
     private String operator = "";
     int numberOfInput = 0;
+    int count = 0;
     private boolean isNewInput = true;
+    
 
     //Number Handlers
     @FXML private void handleCalcPad1() {handleNumInput("1");}
@@ -117,7 +119,11 @@ public class CalculatorController {
 
     @FXML
     private void handleCalcPadDot() {
-        calcDisplay.setText("handleCalcPadDot");
+        if (!calcDisplay.getText().contains(".")) {
+            calcDisplay.setText(calcDisplay.getText() + ".");
+    
+        }
+    
     }
 
     @FXML
@@ -133,22 +139,38 @@ public class CalculatorController {
 
     @FXML
     private void handleCalcPadClear() {
-        calcDisplay.setText("handleCalcPadClear");
-        count = 0;
+        calcDisplay.setText("0");
+        previousValue=0;
+        operator="";
+        isNewInput=true;
+        count=0;
+        
     }
 
     @FXML
     private void handleCalcPadNegative() {
-        calcDisplay.setText("handleCalcPadNegative");
+        String currentText = calcDisplay.getText();
+        if(currentText.startsWith("-")){
+            currentText.substring(1);
+        }else{
+            currentText = "-"+currentText;
+        }
+        calcDisplay.setText(currentText);
     }
 
     @FXML
     private void handleCalcPadDelete() {
-        calcDisplay.setText("handleCalcPadDelete");
+        String currentText=calcDisplay.getText();
+        if(currentText.length()>0){
+            currentText=currentText.substring(0, currentText.length()-1);
+            calcDisplay.setText(currentText);
+        }
+
     }
 
     @FXML
     private void handleCalcPadCE() {
-        calcDisplay.setText("handleCalcPadCE");
+        calcDisplay.setText("0");
+        isNewInput= true;
     }
 }
