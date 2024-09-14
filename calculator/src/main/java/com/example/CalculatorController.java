@@ -109,21 +109,35 @@ public class CalculatorController {
                     previousValue /= currentValue;
                 } else {
                     calcDisplay.setText("Error");
+                    previousValue = 0;
+                    operator = "";
                     return;
                 }
                 break;            
         }
 
-        calcDisplay.setText(String.valueOf(previousValue));
+        //checks for decimal and displays result
+        displayResult(previousValue);
+    }
+
+    //Checks if the result needs decimals or not
+    //If the result is a whole number, then there is no need for decimals
+    private void displayResult (double result){
+        //if result is a whole number
+        if(result == (long) result) {
+            //display as integer
+            calcDisplay.setText(String.valueOf((long) result));
+        } else {
+            //display with decimals
+            calcDisplay.setText(String.valueOf(result));
+        }
     }
 
     @FXML
     private void handleCalcPadDot() {
         if (!calcDisplay.getText().contains(".")) {
             calcDisplay.setText(calcDisplay.getText() + ".");
-    
         }
-    
     }
 
     @FXML
@@ -135,6 +149,8 @@ public class CalculatorController {
             isNewInput = true;
             count = 0;
         }
+        
+        numberOfInput = 0;
     }
 
     @FXML
@@ -144,16 +160,18 @@ public class CalculatorController {
         operator="";
         isNewInput=true;
         count=0;
-        
+        numberOfInput = 0;
     }
 
     @FXML
     private void handleCalcPadNegative() {
         String currentText = calcDisplay.getText();
         if(currentText.startsWith("-")){
-            currentText.substring(1);
+            currentText = currentText.substring(1);
         }else{
-            currentText = "-"+currentText;
+            if (currentText != "0"){ //avoids adding (-) in 0 
+                currentText = "-" + currentText;
+            }
         }
         calcDisplay.setText(currentText);
     }
@@ -161,16 +179,19 @@ public class CalculatorController {
     @FXML
     private void handleCalcPadDelete() {
         String currentText=calcDisplay.getText();
-        if(currentText.length()>0){
-            currentText=currentText.substring(0, currentText.length()-1);
-            calcDisplay.setText(currentText);
+        if(currentText.length() > 1){ 
+            currentText=currentText.substring(0, currentText.length() - 1);
+        } else { //avoids only (-) in display & sets display to 0 once its empty
+            currentText = "0";
         }
-
+        calcDisplay.setText(currentText);
+        isNewInput=true;
     }
 
     @FXML
     private void handleCalcPadCE() {
+        //clears current display, not the operator
         calcDisplay.setText("0");
-        isNewInput= true;
+        isNewInput = true;
     }
 }
