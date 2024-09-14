@@ -47,6 +47,9 @@ public class CalculatorController {
     int numberOfInput = 0;
     int count = 0;
     private boolean isNewInput = true;
+    private boolean hasPendingOp = false;
+    private boolean isOperatorChanged = false; 
+
     
 
     //Number Handlers
@@ -69,6 +72,7 @@ public class CalculatorController {
         } else {
             calcDisplay.setText(calcDisplay.getText() + number);
         }
+        isOperatorChanged = false;
     }
 
     //Arithmetic operation handlers
@@ -79,6 +83,16 @@ public class CalculatorController {
 
     //Handles arithmetic operations
     private void processOp(String newOp) {
+        if (hasPendingOp && isNewInput) {
+            operator = newOp;
+            return;
+        }
+
+        if (isOperatorChanged) {
+            operator = newOp;
+            return;
+        }
+        
         numberOfInput++;
 
         if(numberOfInput > 1) {
@@ -90,6 +104,8 @@ public class CalculatorController {
         operator = newOp;
         previousValue = Double.parseDouble(calcDisplay.getText());
         isNewInput = true;
+        isOperatorChanged = true;  
+        hasPendingOp = true;
     }
 
     //Handles continuous arithmetic operations
@@ -118,6 +134,8 @@ public class CalculatorController {
 
         //checks for decimal and displays result
         displayResult(previousValue);
+        isNewInput = true; 
+        hasPendingOp = false; 
     }
 
     //Checks if the result needs decimals or not
