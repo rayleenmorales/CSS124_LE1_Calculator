@@ -173,12 +173,9 @@ public class CalculatorController {
 
     @FXML
     private void handleCalcPadClear() {
+        //clears current display, not the operator
         calcDisplay.setText("0");
-        previousValue=0;
-        operator="";
-        isNewInput=true;
-        count=0;
-        numberOfInput = 0;
+        isNewInput = true;
     }
 
     @FXML
@@ -208,8 +205,12 @@ public class CalculatorController {
 
     @FXML
     private void handleCalcPadCE() {
-        //clears current display, not the operator
+        //Clears everything
         calcDisplay.setText("0");
-        isNewInput = true;
+        previousValue=0;
+        operator="";
+        isNewInput=true;
+        count=0;
+        numberOfInput = 0;
     }
 }
